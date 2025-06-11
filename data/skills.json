@@ -1,0 +1,41 @@
+[
+  {
+    "name": "HTML5",
+    "icon": "FaHtml5",
+    "years": "2 Years",
+    "level": "Advanced"
+  },
+
+  {
+    "name": "CSS3",
+    "icon": "FaCss3Alt",
+    "years": "2 Years",
+    "level": "Advanced"
+  },
+
+  {
+    "name": "JavaScript",
+    "icon": "FaJs",
+    "years": "2 Years",
+    "level": "Advanced"
+  },
+
+  {
+    "name": "ReactJS",
+    "icon": "FaReact",
+    "years": "1 Year",
+    "level": "Advanced"
+  },
+
+  {
+    "name": "Figma",
+    "icon": "SiFigma",
+    "years": "1 Year",
+    "level": "Intermediate"
+  },
+  { "name": "TailwindCSS",
+    "icon": "SiTailwindcss",
+    "years": "1 Year",
+    "level": "Advanced"
+  }
+]

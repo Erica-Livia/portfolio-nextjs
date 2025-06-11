@@ -1,0 +1,22 @@
+[
+  { 
+    "language": "English",
+    "level": "Advanced"
+  },
+  { 
+    "language": "French", 
+    "level": "Advanced"
+  },
+  { 
+    "language": "Kirundi", 
+    "level": "Native"
+  },
+  { 
+    "language": "Swahili", 
+    "level": "Beginner"
+  },
+  { 
+    "language": "Spanish", 
+    "level": "Beginner"
+  }
+]

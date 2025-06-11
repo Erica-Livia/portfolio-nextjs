@@ -1,0 +1,44 @@
+[
+  {
+    "title": "DSE Program Trainee",
+    "institution": "kLab",
+    "duration": "May 2025 - Present",
+    "description": ""
+  },
+  {
+    "title": "Software Engineer Intern",
+    "institution": "Teeket Events and Experiences - Remote",
+    "duration": "May 2024 - September 2024",
+    "description": "Developed and maintained front-end the admin dashboard using ReactJS."
+  },
+  {
+    "title": "Software Engineer Intern",
+    "institution": "ACLIS - Bujumbura",
+    "duration": "October 2023 - December 2023",
+    "description": "Worked on various web development projects using JavaScript and HTML/CSS."
+  },
+  {
+    "title": "CMU-Africa Graduate Bridge Program Fall 2024",
+    "institution": "Carnegie Mellon University Africa",
+    "duration": "Fall 2024",
+    "description": "6 Weeks Intensive program for graduate studies immersion in Kigali, Rwanda."
+  },
+  {
+    "title": "AI for Impact Hackathon Semifinalist 2024",
+    "institution": "A2SV (Africa to Silicon Valley)",
+    "duration": "2024",
+    "description": "Semifinalist at A2SV 2024 AI for Impact Hackathon. Ranked among the top 32 teams from over 1118+ teams across Africa."
+  },
+  {
+    "title": "Google Developers Group Member",
+    "institution": "Google Developers Group",
+    "duration": "Ongoing",
+    "description": "Active participant in local developer meetups and events in Bujumbura, Burundi."
+  },
+  {
+    "title": "Volunteer",
+    "institution": "Focolari Movement",
+    "duration": "Ongoing",
+    "description": "Participation in local meetups and charity events in Bujumbura, Burundi."
+  }
+]

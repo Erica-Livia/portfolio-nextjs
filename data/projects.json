@@ -1,0 +1,112 @@
+[
+  {
+    "id": "9",
+    "image": "/assets/project9.png",
+    "title": "WANDERLUST 2.0 - BURUNDI TOURISM WEBSITE",
+    "languages": [
+      "REACTJS",
+      "TAILWIND CSS",
+      "NODEJS",
+      "FIREBASE"
+    ],
+    "live": "https://wanderlust-82d86.web.app/",
+    "code": "https://github.com/Erica-Livia/wlproject.git"
+  },
+  {
+    "id": "1",
+    "image": "/assets/project1.png",
+    "title": "AUDIOPHILE E-COMMERCE",
+    "languages": [
+      "REACTJS",
+      "TAILWIND CSS"
+    ],
+    "live": "https://ericacommerce.vercel.app/",
+    "code": "https://github.com/Erica-Livia/e-commerce"
+  },
+  {
+    "id": "0",
+    "image": "/assets/project0.png",
+    "title": "DEVELOPER PORTFOLIO",
+    "languages": [
+      "REACTJS",
+      "TAILWIND CSS"
+    ],
+    "live": "https://blvkfolio.vercel.app/",
+    "code": "https://github.com/Erica-Livia/dev-portfolio"
+  },
+  {
+    "id": "2",
+    "image": "/assets/project2.png",
+    "title": "GASABO DISTRICT WEBSITE",
+    "languages": [
+      "HTML",
+      "CSS",
+      "BOOTSTRAP",
+      "JAVASCRIPT",
+      "JQUERY"
+    ],
+    "live": "https://gasabo.vercel.app/",
+    "code": "https://github.com/Erica-Livia/advanced-frontend-summative"
+  },
+  {
+    "id": "3",
+    "image": "/assets/project3.png",
+    "title": "E-BUSINESS LANDING PAGE",
+    "languages": [
+      "HTML",
+      "CSS",
+      "JAVASCRIPT"
+    ],
+    "live": "https://landingpage-xi-lovat.vercel.app/",
+    "code": "https://github.com/Erica-Livia/CODSOFT"
+  },
+  {
+    "id": "7",
+    "image": "/assets/project7.png",
+    "title": "WHERE IN THE WORLD",
+    "languages": [
+      "REST API",
+      "TAILWIND CSS",
+      "REACTJS"
+    ],
+    "live": "https://witw-lemon.vercel.app/",
+    "code": "https://github.com/Erica-Livia/where-in-the-world.git"
+  },
+  {
+    "id": "4",
+    "image": "/assets/project4.png",
+    "title": "WANDERLUST - BURUNDI TOURISM WEBSITE",
+    "languages": [
+      "HTML",
+      "CSS",
+      "REACTJS"
+    ],
+    "live": "https://wanderlust-discoverbdi.vercel.app/",
+    "code": "https://github.com/Erica-Livia/Wanderlust_discoverbdi"
+  },
+  {
+    "id": "5",
+    "image": "/assets/project5.png",
+    "title": "DRUM KITS MINI GAME",
+    "languages": [
+      "HTML",
+      "CSS",
+      "JAVASCRIPT"
+    ],
+    "live": "https://drumkitsbeta.vercel.app/",
+    "code": "https://github.com/Erica-Livia/mini-game/tree/main"
+  },
+  {
+    "id": "6",
+    "image": "/assets/project6.png",
+    "title": "MY FIRST CALCULATOR",
+    "languages": [
+      "HTML",
+      "CSS",
+      "JAVASCRIPT"
+    ],
+    "live": "https://calculator-lyart-sigma.vercel.app/",
+    "code": "https://github.com/Erica-Livia/CODSOFT/tree/main/task-3-calculator"
+  }
+
+]
