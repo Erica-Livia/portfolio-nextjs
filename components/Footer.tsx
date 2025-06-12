@@ -46,11 +46,11 @@ function Footer() {
     };
 
     return (
-        <div className="bg-darkGrey text-white m-0 px-4 lg:px-32" id="contact">
-            <div className="flex flex-col pt-8 mb-12 pb-8 border-b border-grey">
+        <div className="bg-black text-white m-0 px-4 lg:px-32" id="contact">
+            <div className="flex flex-col pt-8 mb-12 pb-8 ">
                 <div className="flex flex-col lg:flex-row lg:justify-between">
                     <div className="w-full lg:w-1/2 space-y-5">
-                        <h2 className="text-white text-4xl lg:text-88px">Contact</h2>
+                        <h2 className="text-white text-4xl lg:text-48px">Contact</h2>
                         <p className="text-grey text-18px">
                             I would love to hear about your project and how I could help. Please fill in the form, and I’ll get back to you as soon as possible.
                         </p>

@@ -5,7 +5,7 @@ import Image from "next/image";
 function Herosection() {
     return (
         <div
-            className="flex flex-col-reverse md:flex-row items-center -mt-2 pb-12 border-b border-grey border-t-none w-full">
+            className="flex flex-col-reverse md:flex-row items-center -mt-2 pb-12 border-b border-grey w-full min-h-screen">
             {/* Introduction */}
             <div
                 className="flex-row w-full lg:w-full justify-center md:justify-between text-center md:text-start space-y-8">
@@ -23,8 +23,10 @@ function Herosection() {
             </div>
             {/* Picture */}
             <div className="w-full md:w-1/2 flex justify-center md:justify-items-end lg:justify-center">
-                <Image src={'/assets/erica.png'} alt="erica" width={100} height={100}
-                     className="w-52 h-fit bg-darkGrey lg:w-96 md:w-96 mb-8 lg:pb-0"/>
+                <Image src={'/assets/erica.png'} alt="erica" width="0"
+                       height="0"
+                       sizes="100vw" quality={100} unoptimized= {true}
+                     className="w-96 h-auto bg-darkGrey lg:w-96 md:w-96 mb-8 lg:pb-0"/>
             </div>
         </div>
     );

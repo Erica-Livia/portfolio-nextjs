@@ -7,28 +7,41 @@ import Link from 'next/link';
 
 
 type Blog = {
+    image: string;
     title?: string;
-    description1?: string;
+    caption?: string;
     likes?: number;
+    link?: string;
+
 }
 
 
-const Blogcard:React.FC<Blog> = ({ title, description1 , likes}) => {
+const Blogcard:React.FC<Blog> = ({image, title, caption , likes, link}) => {
     return (
-        <div className="w-fit flex-col space-y-6 container items-center border-b rounded-xl p-2">
-            <Image src={""} alt={"Erica"} width={250} height={200} className="bg-grey"/>
-            <h2 className="text-2xl">{title || "Title"}</h2>
-            <p className="text-xl">{description1 || "Lorem Ipsum"}</p>
+        <div className="w-fit flex-col space-y-6 container items-center border rounded-xl">
+            <Image src={image} alt={"Erica"} width="0"
+                   height="0"
+                   sizes="100vw" className="bg-grey w-full h-96 object-cover mb-4 rounded"/>
+            <div className="p-5">
+                <div>
+                    <h2 className="text-2xl pb-4">{title || "Title"}</h2>
+                    <p className="text-xl">{caption || "Lorem Ipsum"}</p>
+                </div>
 
-            <div className="flex justify-end gap-x-2 text-2xl items-center">
-                <GoHeart className="cursor-pointer"/> <p className="text-lg">{likes || 2 }</p>
-                <GoComment className="cursor-pointer"/>
-                <IoIosShareAlt className="cursor-pointer"/>
+                <div className="flex justify-end gap-x-2 text-2xl items-center py-8">
+                <GoHeart className="cursor-pointer"/> <p className="text-lg">{likes || 2}</p>
+                    <GoComment className="cursor-pointer"/>
+                    <IoIosShareAlt className="cursor-pointer"/>
+                </div>
+
+                <div className="flex justify-end">
+                    <Link href={link || "/blog"} target="_blank"
+                         >
+                        <button className="p-3 border bg-black text-white cursor-pointer rounded-2xl">View More</button>
+                    </Link>
+                </div>
             </div>
 
-            <div className="flex justify-end">
-                <Link href={"details"}></Link><button className="p-3 border bg-black text-white cursor-pointer rounded-2xl">View More</button>
-            </div>
         </div>
     )
 }

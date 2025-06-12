@@ -9,7 +9,7 @@ import Languagecard from "@/components/Languagecard";
 
 function Experiencegrid() {
     const [activeSection, setActiveSection] = useState("experience");    return (
-        <div className="py-16 pb-24 mx-auto border-t border-grey">
+        <div className="py-16 pb-24 mx-auto">
             {/*    Navigation between the different section in experience */}
             <div className="flex justify-center mb-8">
                 <div className="block md:hidden relative">
