@@ -56,7 +56,7 @@ function Adminnav() {
 
                     {/* Blogs */}
                     <li>
-                        <a href="/admin/blogs" className="flex items-center">
+                        <a href="/admin/posts" className="flex items-center">
                             <GrArticle className="text-24px mr-2"/> {isExpanded && "Blogs"}
                         </a>
                     </li>
@@ -96,12 +96,16 @@ function Adminnav() {
                                 </a>
 
                                 {/* Logout */}
-                                <button
-                                    onClick={() => setShowLogoutModal(true)}
-                                    className="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center"
-                                >
-                                    <FiLogOut className="mr-2"/> Logout
-                                </button>
+
+
+                                <a href="/" className="flex items-center">
+                                    <button
+                                        onClick={() => setShowLogoutModal(true)}
+                                        className="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center"
+                                    >
+                                        <FiLogOut className="mr-2"/> Logout
+                                    </button>
+                                </a>
                             </div>
                         )}
                     </li>
