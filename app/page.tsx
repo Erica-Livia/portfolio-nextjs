@@ -48,7 +48,7 @@ export default function Home() {
 
                       {/*Blog Overview*/}
                       <div className="flex flex-col justify-center items-center pt-16 md:w-full">
-                          <div className="flex md:flex-rows gap-64 mb-8">
+                          <div className="flex md:flex-rows gap-60 mb-8">
                               <h2 className="text-white text-5xl lg:text-[48px] md:text-6xl text-start">News</h2>
                               <button className="text-white text-18px
                                border-b border-b-green pb-2 hover:text-green mt-4 md:mt-0"><a
@@ -76,12 +76,12 @@ export default function Home() {
               {/* Projects section   */}
               <div className="py-16 mx-auto">
                   <h2 className="text-white text-4xl lg:text-48px md:text-6xl text-center">Projects</h2>
-                  <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-                      <button className="text-white border-b border-b-green pb-2 hover:text-green mt-4 md:mt-0"><a
-                          href="#contact">CONTACT
-                          ME</a>
-                      </button>
-                  </div>
+                  {/*<div className="flex flex-col md:flex-row justify-between items-center mb-8">*/}
+                  {/*    <button className="text-white border-b border-b-green pb-2 hover:text-green mt-4 md:mt-0"><a*/}
+                  {/*        href="#contact">CONTACT*/}
+                  {/*        ME</a>*/}
+                  {/*    </button>*/}
+                  {/*</div>*/}
                   <Projectsgrid/>
               </div>
 

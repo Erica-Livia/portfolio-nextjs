@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from "next/image";
 import { GoHeart } from "react-icons/go";
-import { GoComment } from "react-icons/go";
 import { IoIosShareAlt } from "react-icons/io";
 import Link from 'next/link';
 
@@ -30,7 +29,6 @@ const Blogcard:React.FC<Blog> = ({image, title, caption , likes, link}) => {
 
                 <div className="flex justify-end gap-x-2 text-2xl items-center py-8">
                 <GoHeart className="cursor-pointer"/> <p className="text-lg">{likes || 2}</p>
-                    <GoComment className="cursor-pointer"/>
                     <IoIosShareAlt className="cursor-pointer"/>
                 </div>
 
