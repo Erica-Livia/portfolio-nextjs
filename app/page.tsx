@@ -1,4 +1,4 @@
-
+"use client"
 import Navbar from "@/components/Navbar";
 import Herosection from "@/components/Herosection";
 import Skillsgrid from "@/components/Skillsgrid";
@@ -7,8 +7,37 @@ import Experiencegrid from "@/components/Experiencegrid";
 import Footer from "@/components/Footer";
 import Blogcard from "@/components/Blogcard";
 import updatesData from "@/data/updates.json";
+import axios from "axios";
+import {useEffect, useState} from "react";
+
+type Post = {
+    id: number;
+    title: string;
+    content: string;
+    imageUrl: string;
+    category: number;
+    likes?: number;
+    isPublished?: boolean;
+};
 
 export default function Home() {
+    const [posts, setPosts] = useState<Post[]>([]);
+
+    const fetchPosts = async () => {
+        try {
+            const response = await axios.get("http://127.0.0.1:8000/post/");
+            const fetchedPosts = response.data.data.posts;
+            const publishedPosts = fetchedPosts.filter((post: Post) => post.isPublished);
+            setPosts(publishedPosts);
+        } catch (error) {
+            console.error("Error fetching posts:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
   return (
     <div className="">
       <main className="bg-gray text-white min-h-screen">
@@ -56,9 +85,9 @@ export default function Home() {
                                 </a>
                               </button>
                           </div>
-                          <div className="w-[50%]">
-                              {updatesData.slice(0, 1).map((update, index) => (
-                                  <Blogcard key={index} {...update} />
+                          <div className="w-full md:w-[50%] text-white ">
+                              {posts.slice(0, 1).map((post) => (
+                                  <Blogcard key={post.id} post={post} />
                               ))}
                           </div>
                       </div>

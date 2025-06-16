@@ -1,47 +1,66 @@
-import React from 'react';
+"use client"
+import React, { useState } from "react";
 import Image from "next/image";
-import { GoHeart } from "react-icons/go";
-import { IoIosShareAlt } from "react-icons/io";
-import Link from 'next/link';
+import { CiHeart } from "react-icons/ci";
+import Link from "next/link";
+
+type BlogCardProps = {
+    post: {
+        id: number;
+        title: string;
+        content: string;
+        imageUrl: string;
+        category: number;
+        likes?: number;
+        isPublished?: boolean;
+    };
+};
+
+const BlogCard: React.FC<BlogCardProps> = ({ post}) => {
+    const [showComments, setShowComments] = useState(false);
+    const [comments, setComments] = useState<string[]>([]);
+    const [newComment, setNewComment] = useState("");
 
 
-type Blog = {
-    image: string;
-    title?: string;
-    caption?: string;
-    likes?: number;
-    link?: string;
-
-}
-
-
-const Blogcard:React.FC<Blog> = ({image, title, caption , likes, link}) => {
     return (
-        <div className="w-fit flex-col space-y-6 container items-center border rounded-xl">
-            <Image src={image} alt={"Erica"} width="0"
-                   height="0"
-                   sizes="100vw" className="bg-grey w-full h-96 object-cover mb-4 rounded"/>
-            <div className="p-5">
-                <div>
-                    <h2 className="text-2xl pb-4">{title || "Title"}</h2>
-                    <p className="text-xl">{caption || "Lorem Ipsum"}</p>
+        <div className="border border-grey p-4 rounded shadow">
+            <Link href={`/blog/${post.id}`}>
+                <div className="block cursor-pointer">
+                    <Image
+                        src={post.imageUrl}
+                        alt={post.title}
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        quality={100}
+                        unoptimized={true}
+                        className="w-full h-48 object-cover mb-4 rounded"
+                    />
+                    <h3 className="text-xl font-bold mb-2">{post.title}</h3>
+                    <p className="mb-2">{post.content.slice(0, 100)}...</p>
                 </div>
+            </Link>
 
-                <div className="flex justify-end gap-x-2 text-2xl items-center py-8">
-                <GoHeart className="cursor-pointer"/> <p className="text-lg">{likes || 2}</p>
-                    <IoIosShareAlt className="cursor-pointer"/>
+            <p className="text-sm text-gray-500 mb-2">Likes: {post.likes || 0}</p>
+
+            {showComments && (
+                <div className="mt-4">
+                    <h4 className="font-semibold mb-2">Comments</h4>
+                    <div className="space-y-2 mb-2">
+                        {comments.length > 0 ? (
+                            comments.map((c, i) => (
+                                <p key={i} className="text-sm text-gray-800 bg-gray-100 p-2 rounded">
+                                    {c}
+                                </p>
+                            ))
+                        ) : (
+                            <p className="text-sm text-gray-500">No comments yet.</p>
+                        )}
+                    </div>
                 </div>
-
-                <div className="flex justify-end">
-                    <Link href={link || "/blog"} target="_blank"
-                         >
-                        <button className="p-3 border bg-black text-white cursor-pointer rounded-2xl">View More</button>
-                    </Link>
-                </div>
-            </div>
-
+            )}
         </div>
-    )
-}
+    );
+};
 
-export default Blogcard;
+export default BlogCard;

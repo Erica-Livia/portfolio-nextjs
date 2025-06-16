@@ -4,11 +4,11 @@ import React, { useState } from 'react';
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMsg, setErrorMsg] = useState('');
+    const [error, seterror] = useState('');
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
-        setErrorMsg('');
+        seterror('');
 
         try {
             const res = await fetch('http://127.0.0.1:8000/auth/login', {
@@ -21,21 +21,26 @@ function Login() {
 
             if (res.ok) {
                 const data = await res.json();
-                localStorage.setItem('token', data.token);
+                localStorage.setItem("token", data.data.token);
+                localStorage.setItem("user", JSON.stringify(data.data.user));
 
                 if (typeof window !== 'undefined') {
-                    if (data.role === 'admin') {
-                        window.location.href = '/';
-                    } else {
+                    const role = data.data.user.role;
+
+                    if (role === 'admin') {
                         window.location.href = '/admin/dashboard';
+                        localStorage.setItem("role", "admin");
+                    } else {
+                        window.location.href = '/';
                     }
                 }
+
             } else {
                 const errData = await res.json();
-                setErrorMsg(errData.message || 'Login failed');
+                seterror(errData.message || 'Login failed');
             }
         } catch (error) {
-            setErrorMsg('Network error');
+            seterror('Network error');
             console.error(error);
         }
     };
@@ -66,7 +71,7 @@ function Login() {
                     required
                 /><br/>
 
-                {errorMsg && <p className="text-red-500">{errorMsg}</p>}
+                {error && <p className="text-red-500 w-96">{error}</p>}
 
                 <button
                     type="submit"

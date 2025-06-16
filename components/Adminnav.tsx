@@ -13,7 +13,6 @@ import { GrArticle } from "react-icons/gr";
 function Adminnav() {
     const [isExpanded, setIsExpanded] = useState(true); // State for sidebar expansion
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [showLogoutModal, setShowLogoutModal] = useState(false);
     const dropdownRef = useRef(null);
     // Toggle dropdown
     const toggleDropdown = () => {
@@ -23,6 +22,12 @@ function Adminnav() {
     // Toggle sidebar expansion
     const toggleSidebar = () => {
         setIsExpanded(!isExpanded);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.reload();
     };
     return (
         <div
@@ -100,8 +105,7 @@ function Adminnav() {
 
                                 <a href="/" className="flex items-center">
                                     <button
-                                        onClick={() => setShowLogoutModal(true)}
-                                        className="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center"
+                                        onClick={handleLogout}  className="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center"
                                     >
                                         <FiLogOut className="mr-2"/> Logout
                                     </button>

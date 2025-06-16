@@ -3,45 +3,45 @@
   {
     "title": "CMU-Africa Bridge Program",
     "image": "/assets/cmubridge.jpg",
-    "caption": "Thrilled to have completed the CMU-Africa Bridge Program! This experience has been a transformative journey of growth, collaboration, and innovation. 🚀📚"
+    "content": "Thrilled to have completed the CMU-Africa Bridge Program! This experience has been a transformative journey of growth, collaboration, and innovation. 🚀📚"
   },
   {
     "title": "Biochar project",
     "image": "/assets/bioamak.jpg",
-    "caption": "Kicking off the year with a productive in-person meeting at BioAmak Ltd—aligning goals and fueling innovation for 2025! 🌱"
+    "content": "Kicking off the year with a productive in-person meeting at BioAmak Ltd—aligning goals and fueling innovation for 2025! 🌱"
   },
   {
     "title": "Google's Dev Group",
     "image": "/assets/gdgrecap2024.jpg",
-    "caption": "Had an amazing time at GDG DevFest Bujumbura 2024—connecting, learning, and exploring tech innovations!"
+    "content": "Had an amazing time at GDG DevFest Bujumbura 2024—connecting, learning, and exploring tech innovations!"
   },
   {
     "title": "Menya accelerator opportunity program",
     "image": "/assets/menya1.png",
-    "caption": "Discover the story behind Strong Sister and how we aim to empower women in Burundi. Our goals, achievements, and vision for a safer future continue to inspire change.",
+    "content": "Discover the story behind Strong Sister and how we aim to empower women in Burundi. Our goals, achievements, and vision for a safer future continue to inspire change.",
     "link": "https://strong-sister.vercel.app/"
   },
   {
     "title": "Fontend Web Dev Bootcamp",
     "image": "/assets/azubi.jpg",
-    "caption": "A proud moment! Graduating from Azubi Africa’s Frontend Developer program has equipped me with the skills to build powerful web applications. Onward to new challenges!"
+    "content": "A proud moment! Graduating from Azubi Africa’s Frontend Developer program has equipped me with the skills to build powerful web applications. Onward to new challenges!"
   },
   {
     "title": "Menya Accelerator Cohort 3 closing party",
     "image": "/assets/menya2.jpg",
-    "caption": "Honored to be a guest at the Menya Accelerator Cohort 3 closing party! Sharing my experiences and learning from industry leaders has been an invaluable part of my journey.",
+    "content": "Honored to be a guest at the Menya Accelerator Cohort 3 closing party! Sharing my experiences and learning from industry leaders has been an invaluable part of my journey.",
     "link": "https://www.instagram.com/p/C_coJOjCFZ6/?utm_source=ig_web_copy_link&igshid=MzRlODBiNWFlZA=="
   },
   {
     "title": "A2SV Hackathon Semi-finalists",
     "image": "/assets/synapsetop3.jpg",
-    "caption": "The Synapse Squad made it to the semifinals in the A2SV AI for Impact Hackathon! Competing with top teams, we brought our Strong Sister project to the spotlight and placed among the top 3 in the quarterfinals. Proud of this milestone!",
+    "content": "The Synapse Squad made it to the semifinals in the A2SV AI for Impact Hackathon! Competing with top teams, we brought our Strong Sister project to the spotlight and placed among the top 3 in the quarterfinals. Proud of this milestone!",
     "link": "https://www.linkedin.com/posts/a2sv_a2sv-hackathon-techforgood-activity-7222961730992144384-Mdxx?utm_source=share&utm_medium=member_desktop"
   },
   {
     "title": "A2SV Hachathon",
     "image": "/assets/synapsetop3.jpg",
-    "caption": "Excited to collaborate with fellow developers and innovators at the upcoming Google Developer Group event in Kigali! Looking forward to networking and learning from some amazing minds."
+    "content": "Excited to collaborate with fellow developers and innovators at the upcoming Google Developer Group event in Kigali! Looking forward to networking and learning from some amazing minds."
 
   }
 ]
