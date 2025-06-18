@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import { SiGithub } from "react-icons/si";
 import { FaLinkedin, FaTwitter } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
+import { CgProfile } from "react-icons/cg";
 
 function Navbar() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        // Check if token exists
         const token = localStorage.getItem("token");
         setIsLoggedIn(!!token);
     }, []);
@@ -63,14 +63,18 @@ function Navbar() {
                             </button>
                         </a>
                     ) : (
-                        <button
-                            onClick={handleLogout}
-                            className="w-fit px-6 py-1 rounded-xl text-[16px] font-bold transition-colors duration-700 text-red-500 hover:text-white cursor-pointer"
+                        <div className="flex items-center justify-between">
+                            <a href="/profile"><CgProfile/></a>
+                            <button
+                                onClick={handleLogout}
+                                className="w-fit px-6 py-1 rounded-xl text-[16px] font-bold transition-colors duration-700 text-red-500 hover:text-white cursor-pointer"
 
-                        >
-                            {/*<IoIosLogOut/>*/}
-                            Log Out
-                        </button>
+                            >
+                                {/*<IoIosLogOut/>*/}
+                                Log Out
+                            </button>
+                        </div>
+
                     )}
                 </div>
             </div>

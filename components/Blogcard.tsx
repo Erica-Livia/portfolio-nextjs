@@ -16,6 +16,8 @@ type BlogCardProps = {
     };
 };
 
+
+
 const BlogCard: React.FC<BlogCardProps> = ({ post}) => {
     const [showComments, setShowComments] = useState(false);
     const [comments, setComments] = useState<string[]>([]);

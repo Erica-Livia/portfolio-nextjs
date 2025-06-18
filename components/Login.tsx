@@ -71,6 +71,7 @@ function Login() {
                     required
                 /><br/>
 
+                <a href='/auth/forgot-password' className="underline text-blue-600 text-sm">Forgot Password?</a>
                 {error && <p className="text-red-500 w-96">{error}</p>}
 
                 <button

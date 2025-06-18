@@ -52,8 +52,7 @@ function Signup() {
 
             if (res.status === 201) {
                 setSuccess("Signup successful! Please check your email to verify your account.");
-                // Optionally redirect:
-                // window.location.href = '/verify-pending';
+
             }
         } catch (err: any) {
             if (err.response?.data?.message) {

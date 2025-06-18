@@ -27,7 +27,7 @@ function VerifyEmail() {
                // Redirect to login after 3 seconds
                 setTimeout(() => {
                     router.push("/login");
-                }, 3000);
+                }, 10000);
             } catch (err: any) {
                 setStatus("error");
                 if (err.response?.data?.message) {
@@ -59,7 +59,7 @@ function VerifyEmail() {
                         <h2 className="text-2xl font-semibold mb-2">Oops!</h2>
                         <p>{message}</p>
                         <button
-                            onClick={() => router.push("/signup")}
+                            onClick={() => router.push("/login")}
                             className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
                         >
                             Go to Signup

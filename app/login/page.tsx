@@ -13,7 +13,7 @@ function Page() {
                 <p>Login to view and interact with my blogs. Stay updated!</p>
                 <a href="/">
                     <button
-                        className={`w-44 px-6 py-2 w-fit rounded-xl text-[18px] font-bold transition-colors duration-700 bg-gray text-white border border-white hover:bg-white hover:text-black
+                        className={`w-44 px-6 py-2 rounded-xl text-[18px] font-bold transition-colors duration-700 bg-gray text-white border border-white hover:bg-white hover:text-black
                         `}
                     >
                        Go To Portfolio
