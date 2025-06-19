@@ -8,18 +8,7 @@ function Page() {
 
     return (
         <div className="bg-gray min-h-screen flex flex-col lg:flex-row text-white items-center justify-evenly lg:justify-between text-24px px-20">
-            <div className="flex flex-col text-center gap-5">
-                <p className="text-48px">Hello there, Welcome!</p>
-                <p>Login to view and interact with my blogs. Stay updated!</p>
-                <a href="/">
-                    <button
-                        className={`w-48 px-6 py-2 rounded-xl text-[12px] font-bold transition-colors duration-700 bg-gray text-white border border-white hover:bg-white hover:text-black
-                        `}
-                    >
-                       Go To Portfolio
-                    </button>
-                </a>
-            </div>
+            <p className="text-48px text-center w-1/2">Hello there! Welcome to the Admin Management System</p>
             <div className="w-1/2">
                 <div className="flex items-center justify-center gap-4 mb-6">
                     <button

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import { CiHeart } from "react-icons/ci";
+import axios from "axios";
 
 type Post = {
     id: number;
@@ -12,7 +13,6 @@ type Post = {
     content: string;
     imageUrl: string;
     category: number;
-    likes?: number;
     isPublished?: boolean;
 };
 
@@ -22,6 +22,7 @@ type Params = {
 
 export default function BlogDetailPage({ params }: Params) {
     const router = useRouter();
+
     const [post, setPost] = useState<Post | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -30,74 +31,106 @@ export default function BlogDetailPage({ params }: Params) {
     const [newComment, setNewComment] = useState("");
     const [liked, setLiked] = useState(false);
 
+    const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
     useEffect(() => {
-        async function fetchPost() {
+        const fetchPost = async () => {
             try {
-                const token = localStorage.getItem("token");
-                const res = await fetch(`http://127.0.0.1:8000/post/${params.id}`, {
-                    headers: token
-                        ? {
-                            Authorization: `Bearer ${token}`,
-                        }
-                        : {},
+                const { data } = await axios.get(`http://127.0.0.1:8000/post/${params.id}`, {
+                    headers,
                 });
-                if (!res.ok) throw new Error("Post not found");
-                const data = await res.json();
-                if (!data.data.post.isPublished) throw new Error("Post not published");
+                if (!data.data.post.isPublished) {
+                    throw new Error("Post not published");
+                }
                 setPost(data.data.post);
                 setLikes(data.data.post.likes || 0);
-                setLiked(data.data.post.likedByCurrentUser || false);
+                setLiked(data.data.post.likedByCurrentUser || true);
             } catch (err: any) {
                 setError(err.message);
-            } finally {
-                setLoading(false);
             }
-        }
+        };
+
+        const fetchLikes = async () => {
+            try {
+                const { data } = await axios.get(`http://127.0.0.1:8000/post/${params.id}/likes`);
+                setLikes(data.data.count || 0);
+            } catch (err) {
+                console.error("Failed to fetch likes", err);
+            }
+        };
+
+        const fetchComments = async () => {
+            try {
+                const { data } = await axios.get(`http://127.0.0.1:8000/post/${params.id}/comments`);
+                const loaded = data.data.comments.map((c: any) => c.content);
+                setComments(loaded);
+            } catch (err) {
+                console.error("Failed to fetch comments", err);
+            }
+        };
+
         fetchPost();
+        fetchLikes();
+        fetchComments();
+        setLoading(false);
     }, [params.id]);
 
-
-    const isLoggedIn = Boolean(localStorage.getItem("token"));
-
     const handleLike = async () => {
-        const token = localStorage.getItem("token");
         if (!token) {
-            alert("Please login to like posts");
+            alert("Please login to like/unlike posts");
             return;
         }
 
         try {
-            const res = await fetch(`http://127.0.0.1:8000/post/like/${post?.id}`, {
-                method: "PUT",
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            });
-
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.message || "Failed to like the post");
+            if (!liked) {
+                await axios.post(
+                    `http://127.0.0.1:8000/post/${post?.id}/like`,
+                    {},
+                    { headers }
+                );
+                setLikes((prev) => prev + 1);
+                setLiked(true);
+            } else {
+                await axios.delete(`http://127.0.0.1:8000/post/${post?.id}/like`, {
+                    headers,
+                });
+                setLikes((prev) => Math.max(prev - 1, 0));
+                setLiked(false);
             }
-
-            setLikes((prev) => prev + 1);
-        } catch (error: any) {
-            alert(error.message);
+        } catch (err: any) {
+            alert(err.response?.data?.message || "Failed to toggle like");
         }
     };
 
 
-
-    const handleAddComment = () => {
+    const handleAddComment = async () => {
         const trimmed = newComment.trim();
         if (!trimmed) return;
-        setComments((prev) => [...prev, trimmed]);
-        setNewComment("");
+
+        if (!token) {
+            alert("Please login to comment");
+            return;
+        }
+
+        try {
+            await axios.post(
+                `http://127.0.0.1:8000/post/${post?.id}/comment`,
+                { content: trimmed },
+                { headers }
+            );
+
+            setComments((prev) => [...prev, trimmed]);
+            setNewComment("");
+        } catch (err: any) {
+            alert(err.response?.data?.message || "Failed to add comment");
+        }
     };
 
-    if (loading) return <p className="text-center p-8">Loading...</p>;
-    if (error) return <p className="text-center p-8 text-red-600">{error}</p>;
+    if (loading) return (<><p className="text-center p-8"><Navbar/></p></>
+);
+if (error) return
+    <p className="text-center p-8 text-red-600">{error}</p>;
     if (!post) return null;
 
     return (
@@ -129,12 +162,15 @@ export default function BlogDetailPage({ params }: Params) {
                 <div className="flex items-center mb-6 gap-4">
                     <button
                         onClick={handleLike}
-                        className="flex items-center gap-2 text-red-600 text-2xl hover:text-red-800"
-                        aria-label="Like this post"
+                        className={`flex items-center gap-2 text-2xl ${
+                            liked ? "text-red-600 hover:text-red-800" : "text-gray-600 hover:text-red-500"
+                        }`}
+                        aria-label={liked ? "Unlike this post" : "Like this post"}
                     >
-                        <CiHeart />
+                        <CiHeart/>
                         <span className="text-lg font-semibold">{likes}</span>
                     </button>
+
                 </div>
 
                 <div>

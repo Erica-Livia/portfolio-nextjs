@@ -1,7 +1,7 @@
 "use client"
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
-import Adminnav from "@/components/Adminnav";
+import Adminnav from "@/components/Superadminnav";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 
@@ -194,37 +194,37 @@ function Page() {
     }, []);
 
     return (
-        <div className="flex w-full bg-grey min-h-screen">
+        <div className="flex w-full bg-gray min-h-screen">
             <Adminnav />
-            <div className="flex-1 text-gray px-16">
+            <div className="flex-1 text-white px-16">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-4xl font-bold">Blogs</h1>
                     <button
                         onClick={() => setShowCreateModal(true)}
-                        className="bg-gray w-fit my-8 text-white border border-gray px-6 py-2 rounded-xl text-[18px] font-bold hover:bg-green hover:text-black hover:border-green cursor-pointer transition-colors duration-300"
+                        className="bg-gray w-fit my-8 text-white border border-white px-6 py-2 rounded-xl text-[18px] font-bold hover:bg-green hover:text-black hover:border-green cursor-pointer transition-colors duration-300"
                     >
                         Create a new Post
                     </button>
                 </div>
 
                 <div className="overflow-auto">
-                    <table className="min-w-full border border-gray rounded-lg">
+                    <table className="min-w-full border border-white rounded-lg">
                         <thead>
-                        <tr className="text-left text-gray">
-                            <th className="p-3 border border-gray">Title</th>
-                            {/*<th className="p-3 border border-gray">Category</th>*/}
-                            <th className="p-3 border border-gray">Likes</th>
-                            <th className="p-3 border border-gray">Status</th>
-                            <th className="p-3 border border-gray">Actions</th>
+                        <tr className="text-left text-gray-300">
+                            <th className="p-3 border border-white">Title</th>
+                            {/*<th className="p-3 border border-white">Category</th>*/}
+                            <th className="p-3 border border-white">Likes</th>
+                            <th className="p-3 border border-white">Status</th>
+                            <th className="p-3 border border-white">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         {posts.map((post) => (
-                            <tr key={post.id} className="border border-gray">
-                                <td className="p-3 border border-gray">{post.title}</td>
-                                {/*<td className="p-3 border border-gray">{post.category}</td>*/}
-                                <td className="p-3 border border-gray">{post.likes}</td>
-                                <td className="p-3 border border-gray">
+                            <tr key={post.id} className="border border-white">
+                                <td className="p-3 border border-white">{post.title}</td>
+                                {/*<td className="p-3 border border-white">{post.category}</td>*/}
+                                <td className="p-3 border border-white">{post.likes}</td>
+                                <td className="p-3 border border-white">
                                     {post.isPublished ? (
                                         <span className="text-green-400">Published</span>
                                     ) : (

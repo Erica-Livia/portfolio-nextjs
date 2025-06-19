@@ -1,10 +1,6 @@
 "use client"
 import React, {useState, useRef} from 'react';
 import { RxDashboard } from "react-icons/rx";
-import { FaStarHalfStroke } from "react-icons/fa6";
-import { BsCalendar4Week } from "react-icons/bs";
-import { PiUserBold } from "react-icons/pi";
-import { FiChevronDown, FiChevronUp, FiLogOut,  FiUsers} from "react-icons/fi";
 import { MdSettings } from "react-icons/md";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { GrArticle } from "react-icons/gr";
@@ -24,11 +20,7 @@ function Adminnav() {
         setIsExpanded(!isExpanded);
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
-        window.location.reload();
-    };
+
     return (
         <div
             className={`font-poppins h-screen space-y-8 pl-6 pr-8 py-8 bg-black text-white transition-all duration-200 ${isExpanded ? "w-80" : "w-24"
@@ -66,52 +58,14 @@ function Adminnav() {
                         </a>
                     </li>
 
-                    {/* Users */}
-                    <li>
-                        <a href="/admin/users" className="flex items-center">
-                            <FiUsers className="text-24px mr-2"/> {isExpanded && "Users"}
-                        </a>
-                    </li>
-
                     {/* Profile Dropdown */}
                     <li ref={dropdownRef} className="relative">
-                        <button
-                            onClick={toggleDropdown}
-                            className="flex items-center w-full text-left focus:outline-none"
+                        <a
+                            href="/admin/profile" className="flex items-center"
+
                         >
-                            <MdSettings className="text-24px mr-2"/>
-                            {isExpanded && "Settings"}
-                            {isDropdownOpen ?
-                                <FiChevronUp className={`${isExpanded ? 'ml-2' : 'hidden' }`}/> :
-                                <FiChevronDown className={`${isExpanded ? 'ml-2' : 'hidden' }`}/>
-                            }
-
-                        </button>
-
-                        {/* Dropdown Menu */}
-                        {isDropdownOpen && isExpanded && (
-                            <div
-                                className="absolute left-8 mt-2 py-2 w-48 bg-white rounded-md shadow-lg z-10 text-16px">
-                                {/* Profile Settings */}
-                                <a
-                                    href="/admin/profile"
-                                    className="px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center"
-                                >
-                                    <MdSettings className="mr-2"/> Profile
-                                </a>
-
-                                {/* Logout */}
-
-
-                                <a href="/" className="flex items-center">
-                                    <button
-                                        onClick={handleLogout}  className="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center"
-                                    >
-                                        <FiLogOut className="mr-2"/> Logout
-                                    </button>
-                                </a>
-                            </div>
-                        )}
+                            <MdSettings className="text-24px mr-2"/> {isExpanded && "Profile"}
+                        </a>
                     </li>
                 </ul>
             </div>

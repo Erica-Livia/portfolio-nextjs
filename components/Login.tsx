@@ -22,6 +22,7 @@ function Login() {
             if (res.ok) {
                 const data = await res.json();
                 localStorage.setItem("token", data.data.token);
+                localStorage.setItem("userId", data.data.userId);
                 localStorage.setItem("user", JSON.stringify(data.data.user));
 
                 if (typeof window !== 'undefined') {
@@ -30,6 +31,9 @@ function Login() {
                     if (role === 'admin') {
                         window.location.href = '/admin/dashboard';
                         localStorage.setItem("role", "admin");
+                    } else if (role === 'superAdmin') {
+                        window.location.href = '/superadmin/dashboard';
+                        localStorage.setItem("role", "superAdmin");
                     } else {
                         window.location.href = '/';
                     }
@@ -71,7 +75,7 @@ function Login() {
                     required
                 /><br/>
 
-                <a href='/auth/forgot-password' className="underline text-blue-600 text-sm">Forgot Password?</a>
+                <a href='/auth/forgot-password' className="underline text-green text-sm">Forgot Password?</a>
                 {error && <p className="text-red-500 w-96">{error}</p>}
 
                 <button

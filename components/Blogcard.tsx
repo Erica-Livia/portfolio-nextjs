@@ -1,8 +1,10 @@
-"use client"
-import React, { useState } from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Image from "next/image";
-import { CiHeart } from "react-icons/ci";
 import Link from "next/link";
+import { CiHeart } from "react-icons/ci";
 
 type BlogCardProps = {
     post: {
@@ -16,16 +18,36 @@ type BlogCardProps = {
     };
 };
 
+const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
+    const [likeCount, setLikeCount] = useState<number>(0);
+    const [commentCount, setCommentsCount] = useState<string[]>([]);
 
+    useEffect(() => {
+        const fetchLikes = async () => {
+            try {
+                const res = await axios.get(`http://localhost:8000/post/${post.id}/likes`);
+                setLikeCount(res.data.data.count);
+            } catch (error) {
+                console.error("Failed to fetch like count", error);
+            }
+        };
 
-const BlogCard: React.FC<BlogCardProps> = ({ post}) => {
-    const [showComments, setShowComments] = useState(false);
-    const [comments, setComments] = useState<string[]>([]);
-    const [newComment, setNewComment] = useState("");
+        const fetchComments = async () => {
+            try {
+                const res = await axios.get(`http://localhost:8000/post/${post.id}/comments`);
+                const commentContents = res.data.data.comments.map((c: any) => c.content);
+                setCommentsCount(res.data.data.count);
+            } catch (error) {
+                console.error("Failed to fetch comments", error);
+            }
+        };
 
+        fetchLikes();
+        fetchComments();
+    }, [post.id]);
 
     return (
-        <div className="border border-grey p-4 rounded shadow">
+        <div className="border border-gray-300 p-4 rounded shadow">
             <Link href={`/blog/${post.id}`}>
                 <div className="block cursor-pointer">
                     <Image
@@ -43,24 +65,12 @@ const BlogCard: React.FC<BlogCardProps> = ({ post}) => {
                 </div>
             </Link>
 
-            <p className="text-sm text-gray-500 mb-2">Likes: {post.likes || 0}</p>
+            <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-500">Likes: {likeCount}</p>
+                <p className="text-sm text-gray-500">Comments {commentCount}</p>
 
-            {showComments && (
-                <div className="mt-4">
-                    <h4 className="font-semibold mb-2">Comments</h4>
-                    <div className="space-y-2 mb-2">
-                        {comments.length > 0 ? (
-                            comments.map((c, i) => (
-                                <p key={i} className="text-sm text-gray-800 bg-gray-100 p-2 rounded">
-                                    {c}
-                                </p>
-                            ))
-                        ) : (
-                            <p className="text-sm text-gray-500">No comments yet.</p>
-                        )}
-                    </div>
-                </div>
-            )}
+            </div>
+
         </div>
     );
 };
