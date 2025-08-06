@@ -1,9 +1,10 @@
 "use client";
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+import toast from 'react-hot-toast';
 
 function Signup() {
-    const [formData, setFormData] = useState({
+    const initialFormData = {
         firstName: '',
         lastName: '',
         email: '',
@@ -11,10 +12,8 @@ function Signup() {
         confirmPassword: '',
         role: 'user',
         conditions: false,
-    });
-
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
+    };
+    const [formData, setFormData] = useState(initialFormData);
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         const { name, value, type, checked } = e.target;
@@ -26,41 +25,44 @@ function Signup() {
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        setError('');
-        setSuccess('');
 
         if (!formData.conditions) {
-            setError('You must agree to the terms and conditions');
+            toast.error('You must agree to the terms and conditions');
             return;
         }
 
         if (formData.password !== formData.confirmPassword) {
-            setError('Passwords do not match');
+            toast.error('Passwords do not match');
             return;
         }
 
-        try {
-            const { firstName, lastName, email, password, role } = formData;
-            const name = `${firstName} ${lastName}`;
+        const { firstName, lastName, email, password, role } = formData;
+        const name = `${firstName} ${lastName}`;
 
-            const res = await axios.post('http://127.0.0.1:8000/auth/signup', {
-                name,
-                email,
-                password,
-                role
+        // 4. Use toast.promise to handle the API call states
+        const signupPromise = axios.post('http://127.0.0.1:8000/auth/signup', {
+            name,
+            email,
+            password,
+            role
+        });
+
+        toast.promise(
+            signupPromise,
+            {
+                loading: 'Creating your account...',
+                success: (res) => res.data.message || "Signup successful! Please check your email.",
+                error: (err: AxiosError<{ message: string }>) => {
+                    return err.response?.data?.message || 'Signup failed. Please try again.';
+                }
+            }
+        )
+            .then(() => {
+                setFormData(initialFormData);
+            })
+            .catch((err) => {
+                console.error("Signup failed:", err);
             });
-
-            if (res.status === 201) {
-                setSuccess("Signup successful! Please check your email to verify your account.");
-
-            }
-        } catch (err: any) {
-            if (err.response?.data?.message) {
-                setError(err.response.data.message);
-            } else {
-                setError('Something went wrong');
-            }
-        }
     }
 
     return (
@@ -135,9 +137,6 @@ function Signup() {
                         By ticking this box, I certify that I have read and understood the terms & conditions of this platform.
                     </label>
                 </div>
-
-                {error && <p className="text-red-500 mt-2 w-96">{error}</p>}
-                {success && <p className="text-green-500 mt-2 w-96">{success}</p>}
 
                 <button
                     type="submit"

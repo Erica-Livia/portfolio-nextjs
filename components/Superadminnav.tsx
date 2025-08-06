@@ -46,7 +46,7 @@ function superadminnav() {
             </div>
 
             {/* Navigation as */}
-            <div className="text-18px">
+            <div className="text-18px text-black">
                 <ul className="space-y-8" >
                     {/* Dashboard */}
                     <li>

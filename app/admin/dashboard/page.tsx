@@ -43,7 +43,7 @@ function Page() {
     return (
         <div className="flex w-full flex-row">
             <Adminnav />
-            <div className="bg-grey min-h-screen text-gray flex flex-col items-center px-16 pt-28 gap-8 w-full">
+            <div className="bg-white min-h-screen text-gray flex flex-col items-center px-16 pt-28 gap-8 w-full">
                 <h2 className="text-4xl font-bold text-center">
                     Welcome Back <span className="text-gray">Admin!</span>
                 </h2>

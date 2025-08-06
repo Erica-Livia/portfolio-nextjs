@@ -1,14 +1,15 @@
 "use client"
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, seterror] = useState('');
 
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        seterror('');
+
+        const toastId = toast.loading('Logging in...');
 
         try {
             const res = await fetch('http://127.0.0.1:8000/auth/login', {
@@ -19,33 +20,38 @@ function Login() {
                 body: JSON.stringify({ email, password }),
             });
 
-            if (res.ok) {
-                const data = await res.json();
-                localStorage.setItem("token", data.data.token);
-                localStorage.setItem("userId", data.data.userId);
-                localStorage.setItem("user", JSON.stringify(data.data.user));
+            const data = await res.json();
 
-                if (typeof window !== 'undefined') {
-                    const role = data.data.user.role;
+            if (!res.ok) {
 
+                throw new Error(data.message || 'Authentication failed');
+            }
+
+            toast.success('Login successful! Redirecting...', { id: toastId });
+
+            localStorage.setItem("token", data.data.token);
+            localStorage.setItem("userId", data.data.userId);
+            localStorage.setItem("user", JSON.stringify(data.data.user));
+
+            if (typeof window !== 'undefined') {
+                const role = data.data.user.role;
+                localStorage.setItem("role", role);
+
+                setTimeout(() => {
                     if (role === 'admin') {
                         window.location.href = '/admin/dashboard';
-                        localStorage.setItem("role", "admin");
                     } else if (role === 'superAdmin') {
                         window.location.href = '/superadmin/dashboard';
-                        localStorage.setItem("role", "superAdmin");
                     } else {
                         window.location.href = '/';
                     }
-                }
-
-            } else {
-                const errData = await res.json();
-                seterror(errData.message || 'Login failed');
+                }, 1500);
             }
-        } catch (error) {
-            seterror('Network error');
-            console.error(error);
+
+        } catch (error: any) {
+
+            toast.error(error.message || 'An unexpected error occurred.', { id: toastId });
+            console.error("Login process failed:", error);
         }
     };
 
@@ -76,7 +82,6 @@ function Login() {
                 /><br/>
 
                 <a href='/auth/forgot-password' className="underline text-green text-sm">Forgot Password?</a>
-                {error && <p className="text-red-500 w-96">{error}</p>}
 
                 <button
                     type="submit"

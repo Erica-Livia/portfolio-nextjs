@@ -1,42 +1,38 @@
 "use client";
 import React, { useState } from 'react';
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import toast from 'react-hot-toast';
 
 function Page() {
-    const [formData, setFormData] = useState({ email: '' });
+    const [email, setEmail] = useState('');
     const router = useRouter();
-    const [status, setStatus] = useState<"normal" | "processing" | "success" | "error">("normal");
-    const [message, setMessage] = useState("");
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    }
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        setStatus("processing");
-        setMessage("");
+        setIsLoading(true);
+
+        const toastId = toast.loading('Sending reset link...');
 
         try {
-            const {email} = formData;
             const res = await axios.post('http://127.0.0.1:8000/auth/forgot-password', {
                 email,
             });
 
             if (res.status === 200) {
-                setStatus("success");
-                setMessage("Check your email. We've sent you a link to reset your password.");
+                toast.success(res.data.message || "Reset link sent successfully!", { id: toastId });
+                setIsSuccess(true);
                 setTimeout(() => router.push("/login"), 10000);
             }
-        } catch (err: any) {
-            setStatus("error");
-            if (err.response?.data?.message) {
-                setMessage(err.response.data.message);
-            } else {
-                setMessage("Resetting password process failed.");
-            }
+        } catch (err) {
+            const error = err as AxiosError<{ message: string }>;
+            const errorMessage = error.response?.data?.message || "Failed to send reset link.";
+            toast.error(errorMessage, { id: toastId });
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -45,7 +41,7 @@ function Page() {
             <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-6 text-center">Password Reset</h2>
 
-                {status !== "success" && (
+                {!isSuccess ? (
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -55,38 +51,36 @@ function Page() {
                                 type="email"
                                 id="email"
                                 name="email"
-                                value={formData.email}
-                                onChange={handleChange}
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
                                 required
                                 className="mt-2 w-full px-4 py-2 border border-gray rounded-lg focus:outline-none"
-                                disabled={status === "processing"}
+                                disabled={isLoading}
                             />
                         </div>
 
-                        {status === "processing" && (
-                            <div className="text-green text-sm text-center">Sending reset link...</div>
-                        )}
-
-                        {message && status === "error" && (
-                            <div className="text-red-500 text-sm text-center">{message}</div>
-                        )}
 
                         <button
                             type="submit"
-                            disabled={status === "processing"}
+                            disabled={isLoading}
                             className={`w-full py-2 px-4 rounded-lg font-semibold transition duration-300 ${
-                                status === "processing"
-                                    ? "bg-white text-black cursor-not-allowed"
-                                    : "bg-gray text-white hover:bg-white hover:text-black cursor-pointer hover:border"
+                                isLoading
+                                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                                    : "bg-gray-800 text-white hover:bg-gray-700 cursor-pointer"
                             }`}
                         >
-                            {status === "processing" ? "Processing..." : "Send Reset Link"}
+                            {isLoading ? "Processing..." : "Send Reset Link"}
                         </button>
                     </form>
-                )}
-
-                {status === "success" && (
-                    <div className="text-green-600 text-center font-medium mt-4">{message}</div>
+                ) : (
+                    <div className="text-center">
+                        <p className="text-green-600 font-medium">
+                            Request received! If an account with that email exists, we've sent it a link to reset your password.
+                        </p>
+                        <p className="text-sm text-gray-500 mt-2">
+                            You will be redirected to the login page shortly.
+                        </p>
+                    </div>
                 )}
             </div>
         </div>

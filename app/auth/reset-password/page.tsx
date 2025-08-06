@@ -1,38 +1,40 @@
 "use client";
 import React, { useState } from 'react';
 import { useRouter, useSearchParams } from "next/navigation";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import toast from 'react-hot-toast';
 
 function Page() {
     const [formData, setFormData] = useState({
         newPassword: '',
         confirmNewPassword: ''
     });
+    const [isLoading, setIsLoading] = useState(false);
 
-    const [status, setStatus] = useState<"normal" | "processing" | "success" | "error">("normal");
-    const [message, setMessage] = useState('');
     const router = useRouter();
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value,
-        }));
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setMessage('');
-        setStatus("processing");
 
         if (formData.newPassword !== formData.confirmNewPassword) {
-            setStatus("error");
-            setMessage("Passwords do not match.");
+            toast.error("Passwords do not match.");
             return;
         }
+
+        if (!token) {
+            toast.error("Invalid or missing reset token. Please request a new link.");
+            return;
+        }
+
+        setIsLoading(true);
+        const toastId = toast.loading("Changing your password...");
 
         try {
             const res = await axios.post(`http://127.0.0.1:8000/auth/reset-password/${token}`, {
@@ -40,18 +42,15 @@ function Page() {
             });
 
             if (res.status === 200) {
-                setStatus("success");
-                setMessage("Password updated successfully! Redirecting to login...");
-                setTimeout(() => router.push("/login"), 8000);
+                toast.success("Password updated successfully! Redirecting to login...", { id: toastId });
+                setTimeout(() => router.push("/login"), 3000);
             }
-
-        } catch (err: any) {
-            setStatus("error");
-            if (err.response?.data?.message) {
-                setMessage(err.response.data.message);
-            } else {
-                setMessage("Reset password failed.");
-            }
+        } catch (err) {
+            const error = err as AxiosError<{ message: string }>;
+            const errorMessage = error.response?.data?.message || "Failed to reset password. The link may have expired.";
+            toast.error(errorMessage, { id: toastId });
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -69,8 +68,8 @@ function Page() {
                             value={formData.newPassword}
                             onChange={handleChange}
                             required
-                            disabled={status === "processing"}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg "
+                            disabled={isLoading}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                         />
                     </div>
 
@@ -82,31 +81,22 @@ function Page() {
                             value={formData.confirmNewPassword}
                             onChange={handleChange}
                             required
-                            disabled={status === "processing"}
+                            disabled={isLoading} // 5. Use isLoading for disabled state
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg"
                         />
                     </div>
 
-                    {message && (
-                        <p
-                            className={`text-sm text-center mt-2 ${
-                                status === "success" ? "text-green-600" : "text-red-500"
-                            }`}
-                        >
-                            {message}
-                        </p>
-                    )}
 
                     <button
                         type="submit"
-                        disabled={status === "processing"}
+                        disabled={isLoading}
                         className={`w-full py-2 px-4 rounded-lg font-semibold transition duration-300 ${
-                            status === "processing"
-                                ? "bg-white text-black cursor-not-allowed"
-                                : "bg-gray text-white hover:bg-white hover:text-black cursor-pointer hover:border"
+                            isLoading
+                                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                                : "bg-gray-800 text-white hover:bg-gray-700 cursor-pointer"
                         }`}
                     >
-                        {status === "processing" ? "Changing..." : "Change Password"}
+                        {isLoading ? "Changing..." : "Change Password"}
                     </button>
                 </form>
             </div>

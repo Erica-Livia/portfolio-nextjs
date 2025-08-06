@@ -67,7 +67,6 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
 
             <div className="flex items-center justify-between">
                 <p className="text-sm text-gray-500">Likes: {likeCount}</p>
-                <p className="text-sm text-gray-500">Comments {commentCount}</p>
 
             </div>
 

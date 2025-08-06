@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Adminnav from "@/components/Superadminnav";
+import Superadminnav from "@/components/Superadminnav";
 import axios from "axios";
 
 type User = {
@@ -77,7 +77,7 @@ function Page() {
 
     return (
         <div className="flex w-full flex-row align-items-center bg-gray">
-            <Adminnav />
+            <Superadminnav />
             <div className="bg-gray min-h-screen text-white flex flex-col items-center px-16 gap-8 w-full">
                 <h2 className="text-4xl font-bold text-start py-8">Users</h2>
                 {error && <p className="text-red-500">{error}</p>}

@@ -1,66 +1,83 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import toast from 'react-hot-toast'; // 1. Import toast
 
 function VerifyEmail() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
 
-    const [status, setStatus] = useState<"verifying" | "success" | "error">("verifying");
-    const [message, setMessage] = useState("");
+    const [pageStatus, setPageStatus] = useState<{
+        status: "verifying" | "success" | "error";
+        message: string;
+    }>({
+        status: "verifying",
+        message: "Verifying your email, please wait..."
+    });
 
     useEffect(() => {
         if (!token) {
-            setStatus("error");
-            setMessage("Invalid or missing verification token.");
+            toast.error("Invalid or missing verification token.");
+            setPageStatus({
+                status: "error",
+                message: "The verification link is invalid or missing a token."
+            });
             return;
         }
 
-        const verify = async () => {
-            try {
-                const res = await axios.get(`http://127.0.0.1:8000/auth/verify-email/${token}`);
-                setStatus("success");
-                setMessage(res.data.message || "Email verified successfully!");
+        const verificationPromise = axios.get(`http://127.0.0.1:8000/auth/verify-email/${token}`);
 
-               // Redirect to login after 3 seconds
+        toast.promise(
+            verificationPromise,
+            {
+                loading: 'Verifying your email...',
+                success: (res) => res.data.message || 'Email verified successfully!',
+                error: (err: AxiosError<{ message: string }>) =>
+                    err.response?.data?.message || 'Verification failed. The link may be invalid or expired.'
+            }
+        )
+            .then((res) => {
+                setPageStatus({ status: "success", message: res.data.message });
                 setTimeout(() => {
                     router.push("/login");
-                }, 10000);
-            } catch (err: any) {
-                setStatus("error");
-                if (err.response?.data?.message) {
-                    setMessage(err.response.data.message);
-                } else {
-                    setMessage("Verification failed. Please try again or request a new link.");
-                }
-            }
-        };
+                }, 3000); // Redirect after 3 seconds
+            })
+            .catch((err: AxiosError<{ message: string }>) => {
+                setPageStatus({
+                    status: "error",
+                    message: err.response?.data?.message || "Verification failed. Please try signing up again."
+                });
+            });
 
-        verify();
-    }, [token, router]);
+    }, []);
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen px-4">
-            <div className="text-center bg-white p-8 rounded-xl shadow-lg max-w-md">
-                {status === "verifying" && <p className="text-gray-700">Verifying your email...</p>}
+        <div className="flex flex-col items-center justify-center min-h-screen px-4 bg-gray-50">
+            <div className="text-center bg-white p-8 rounded-xl shadow-lg max-w-md w-full">
+                {pageStatus.status === "verifying" && (
+                    <>
+                        <h2 className="text-2xl font-semibold mb-2 text-gray-800">Verifying...</h2>
+                        <p className="text-gray-700">{pageStatus.message}</p>
+                    </>
+                )}
 
-                {status === "success" && (
+                {pageStatus.status === "success" && (
                     <div className="text-green-600">
                         <h2 className="text-2xl font-semibold mb-2">Success!</h2>
-                        <p>{message}</p>
-                        <p className="mt-4 text-sm text-gray-500">Redirecting to login...</p>
+                        <p>{pageStatus.message}</p>
+                        <p className="mt-4 text-sm text-gray-500">You will be redirected to the login page shortly...</p>
                     </div>
                 )}
 
-                {status === "error" && (
+                {pageStatus.status === "error" && (
                     <div className="text-red-600">
-                        <h2 className="text-2xl font-semibold mb-2">Oops!</h2>
-                        <p>{message}</p>
+                        <h2 className="text-2xl font-semibold mb-2">Verification Failed</h2>
+                        <p>{pageStatus.message}</p>
                         <button
-                            onClick={() => router.push("/login")}
-                            className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+                            onClick={() => router.push("/signup")}
+                            className="mt-6 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition"
                         >
                             Go to Signup
                         </button>
